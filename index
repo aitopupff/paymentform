@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>পেমেন্ট ফর্ম</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .radio-group {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #3e9144;
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 15px;
+      }
+      .radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .radio-group label {
+        margin-bottom: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>পেমেন্ট ফর্ম</h2>
+    <form id="payment-form">
+      <label>Game Id Name </label>
+      <input type="text" name="name" required>
+
+      <label>Uid</label>
+      <input type="text" name="uid" required>
+
+      <label>Sender Number </label>
+      <input type="number" name="sender" required>
+
+      <label>ট্রানজ্যাকশন আইডি</label>
+      <input type="text" name="trxid" required>
+
+      <div class="radio-group">
+        <label><input type="radio" name="method" value="Bkash" required> Bkash</label>
+        <label><input type="radio" name="method" value="Nagad"> Nagad</label>
+      </div>
+
+      <button type="submit" class="submit-btn">জমা দিন</button>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyiW-pLevyY-ceFgADzMAIJyVyw4s6eMueZMzfVs_VgEZ7bib5O8H_DY_V9FyUCx5aQqw/exec';
+    const form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          alert('✅ আপনার তথ্য সফলভাবে জমা হয়েছে!');
+          form.reset();
+        })
+        .catch(error => {
+          alert('❌ একটি সমস্যা হয়েছে! দয়া করে আবার চেষ্টা করুন।');
+          console.error('Error!', error.message);
+        });
+    });
+  </script>
+
+</body>
+</html>
